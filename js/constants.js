@@ -1,0 +1,1 @@
+export const TASK_CELL_SIZE = 20;
