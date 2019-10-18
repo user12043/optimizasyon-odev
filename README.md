@@ -1,0 +1,2 @@
+# optimizasyon-odev
+Optimizasyon ödevi
