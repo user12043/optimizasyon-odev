@@ -9,6 +9,7 @@ const taskObj = {
   id, // a unique id to identify task
   description, // A string describes the task's necessity
   tasksBefore, // The ids of tasks have to be done before this task
+  tasksAfter, // The ids of tasks have to be done after this task
   cost, // The expected cost of task
   responsible, // The responsible of the task
   color // A color for task
@@ -23,6 +24,7 @@ export default {
       id: "A",
       description: "Mal seçimi (Kısım mud.)",
       tasksBefore: [],
+      tasksAfter: ["C"],
       cost: 3,
       responsible: "Kısım mud.",
       color: "#67fac3"
@@ -31,6 +33,7 @@ export default {
       id: "B",
       description: "Mal seçimi (Satın Alma)",
       tasksBefore: [],
+      tasksAfter: ["C"],
       cost: 2,
       responsible: "Satın Alma",
       color: "#84739a"
@@ -39,6 +42,7 @@ export default {
       id: "C",
       description: "İlan için mal seçimi ve fiyat belirleme",
       tasksBefore: ["A", "B"],
+      tasksAfter: ["D", "E", "G"],
       cost: 2,
       responsible: "Satın Alma",
       color: "ff8400"
@@ -47,6 +51,7 @@ export default {
       id: "D",
       description: "İlan Hazırlığı (Resim)",
       tasksBefore: ["C"],
+      tasksAfter: ["F"],
       cost: 4,
       responsible: "Tasarım",
       color: "#abfcdd"
@@ -55,6 +60,7 @@ export default {
       id: "E",
       description: "İlan Hazırlığı (Yazı)",
       tasksBefore: ["C"],
+      tasksAfter: ["F"],
       cost: 3,
       responsible: "Tasarım",
       color: "#000000"
@@ -63,6 +69,7 @@ export default {
       id: "F",
       description: "İlan Tasarımı",
       tasksBefore: ["D", "E"],
+      tasksAfter: ["I"],
       cost: 2,
       responsible: "Tasarım",
       color: "#ffffff"
@@ -71,6 +78,7 @@ export default {
       id: "G",
       description: "Posta Listesi Hazırlama",
       tasksBefore: ["C"],
+      tasksAfter: ["H"],
       cost: 3,
       responsible: "Halkla ilişkiler",
       color: "#ab317c"
@@ -79,6 +87,7 @@ export default {
       id: "H",
       description: "Etiket Basımı",
       tasksBefore: ["G"],
+      tasksAfter: ["J"],
       cost: 1,
       responsible: "Satın Alma",
       color: "#887402"
@@ -87,6 +96,7 @@ export default {
       id: "I",
       description: "İlan Basımı",
       tasksBefore: ["F"],
+      tasksAfter: ["J"],
       cost: 5,
       responsible: "Satın Alma",
       color: "#13f7ad"
@@ -95,9 +105,19 @@ export default {
       id: "J",
       description: "Etiket Yapıştırma",
       tasksBefore: ["H", "I"],
+      tasksAfter: ["K"],
       cost: 2,
       responsible: "Satın Alma",
       color: "#849291"
+    },
+    {
+      id: "K",
+      description: "İlan Postalama",
+      tasksBefore: ["J"],
+      tasksAfter: [],
+      cost: 10,
+      responsible: "Muhaberat",
+      color: "#145f5a"
     }
   ]
 };
