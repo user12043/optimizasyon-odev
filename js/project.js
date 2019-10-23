@@ -16,9 +16,12 @@ const taskObj = {
 };
  */
 export default {
-  estimatedTotalCost: 42,
-  realTotalCost: 49,
-  possibility: false,
+  estimatedTotalCost: 30,
+  realTotalCost: 28,
+  possibility: true,
+  find: (id, tasks) => {
+    return tasks.find(task => task.id === id);
+  },
   tasks: [
     {
       id: "A",
