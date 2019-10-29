@@ -17,11 +17,6 @@ CanvasRenderingContext2D.prototype.clear =
     }
   };
 
-const canvas = document.getElementById("canvas");
-let ctx = canvas.getContext("2d");
-window.ctx = ctx;
-// ctx.translate(1.5, 1.5);
-
 // redraw canvas on resize
 window.addEventListener(
   "resize",
@@ -31,6 +26,13 @@ window.addEventListener(
   true
 );
 
+const canvas = document.getElementById("canvas");
+let ctx = canvas.getContext("2d");
+window.ctx = ctx;
+// ctx.translate(1.5, 1.5);
+
+const drawing = [];
+
 function getCell(x, y) {
   return {
     x: x * TASK_CELL_SIZE + TASK_CELL_SIZE / 2 + GRAPH_MARGIN,
@@ -38,17 +40,12 @@ function getCell(x, y) {
   };
 }
 
-function drawTask(taskId, cellX, cellY) {
-  cellX *= 2; // a blank column between tasks
-  const { x, y } = getCell(cellX, cellY);
-  // ctx.fillRect(x, y, TASK_CELL_SIZE, TASK_CELL_SIZE);
+function drawTask({ id, x, y }) {
   ctx.beginPath();
   ctx.arc(x, y, TASK_CELL_SIZE / 2, 0, 360);
-  ctx.strokeText(taskId, x, y);
+  ctx.strokeText(id, x, y);
   ctx.stroke();
 }
-
-const drawing = [];
 
 function pushDraw({ id, column }) {
   // create the rows if not exists
@@ -57,7 +54,9 @@ function pushDraw({ id, column }) {
   }
 
   drawing[column].push({
-    id
+    id,
+    x: getCell(column * 2, drawing[column].length).x,
+    y: getCell(column, drawing[column].length).y
   });
 }
 
@@ -73,17 +72,41 @@ function setColumn(task, columnIndex) {
 }
 
 function draw() {
-  drawing.forEach((column, x) =>
-    column.forEach((row, y) => {
-      drawTask(row.id, x, y);
+  // draw task circles
+  drawing.forEach(column =>
+    column.forEach(row => {
+      drawTask(row);
     })
   );
+
+  // draw lines
+  drawing.forEach(column => {
+    column.forEach(({ id, x, y }) => {
+      const { tasks } = project;
+      // find related task
+      const task = project.find(id, tasks);
+      // iterate tasks after
+      task.tasksAfter.forEach(afterTaskId => {
+        const afterTask = project.find(afterTaskId, tasks);
+        // find task in drawing
+        drawing[afterTask.column].find(row => {
+          if (row.id == afterTaskId) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(row.x, row.y);
+            ctx.stroke();
+          }
+        });
+      });
+    });
+  });
 }
 
 export function drawProjectGraph() {
-  ctx.clear();
   canvas.height = canvas.clientHeight;
   canvas.width = canvas.clientWidth;
+  ctx.clear();
+  drawing.splice(0, drawing.length);
   let { tasks } = project;
   const column = 0;
   const firstColumnTasks = tasks.filter(task => !task.tasksBefore.length);
