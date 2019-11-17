@@ -1,5 +1,5 @@
 import project from "./project.js";
-import { TASK_CELL_SIZE, GRAPH_MARGIN } from "./constants.js";
+import { TASK_CELL_SIZE, GRAPH_MARGIN, GRAPH_FONT_SIZE } from "./constants.js";
 
 // Add clear method to canvas
 CanvasRenderingContext2D.prototype.clear =
@@ -43,7 +43,10 @@ function getCell(x, y) {
 function drawTask({ id, x, y }) {
   ctx.beginPath();
   ctx.arc(x, y, TASK_CELL_SIZE / 2, 0, 360);
-  ctx.strokeText(id, x, y);
+  const style = ctx.strokeStyle;
+  ctx.strokeStyle = "#FF0000";
+  ctx.strokeText(id, x - GRAPH_FONT_SIZE / 4, y + GRAPH_FONT_SIZE / 4);
+  ctx.strokeStyle = style;
   ctx.stroke();
 }
 
@@ -56,7 +59,7 @@ function pushDraw({ id, column }) {
   drawing[column].push({
     id,
     x: getCell(column * 2, drawing[column].length).x,
-    y: getCell(column, drawing[column].length).y
+    y: getCell(column, drawing[column].length * 2).y
   });
 }
 
@@ -71,15 +74,7 @@ function setColumn(task, columnIndex) {
   }
 }
 
-function draw() {
-  // draw task circles
-  drawing.forEach(column =>
-    column.forEach(row => {
-      drawTask(row);
-    })
-  );
-
-  // draw lines
+function drawLines() {
   drawing.forEach(column => {
     column.forEach(({ id, x, y }) => {
       const { tasks } = project;
@@ -102,10 +97,23 @@ function draw() {
   });
 }
 
+function draw() {
+  // draw task circles
+  drawing.forEach(column =>
+    column.forEach(row => {
+      drawTask(row);
+    })
+  );
+
+  // draw lines
+  drawLines();
+}
+
 export function drawProjectGraph() {
   canvas.height = canvas.clientHeight;
   canvas.width = canvas.clientWidth;
   ctx.clear();
+  ctx.font = GRAPH_FONT_SIZE + "px sans-serif";
   drawing.splice(0, drawing.length);
   let { tasks } = project;
   const column = 0;
