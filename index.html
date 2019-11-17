@@ -9,11 +9,45 @@
     />
     <link href="./css/style.css" rel="stylesheet" />
   </head>
-  <body>
+  <body style="text-align: center;">
     <h1>HA</h1>
     <canvas id="canvas">
       Your browser does not support canvas! Application will not work.
     </canvas>
+    <div style="width: 80%; text-align: center; margin: auto;">
+      <button id="addTaskBtn" style="float: right;">Add new</button>
+      <table border="3" style="text-align: center; width: 100%;">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Tasks Before</th>
+            <th>Cost</th>
+            <th>Responsible</th>
+            <th>Color</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="inputTableBody">
+          <tr id="emptyTaskTr" style="display: none;">
+            <!-- <td></td> -->
+            <td>
+              <input type="text" class="taskDesc" />
+            </td>
+            <td>
+              <select class="tasksBefore">
+                <option>Select...</option>
+              </select>
+            </td>
+            <td><input type="number" class="taskCost" /></td>
+            <td><input type="text" class="taskResponsible" /></td>
+            <td><input type="color" class="taskColor" /></td>
+            <td><button class="taskRemoveBtn">Remove</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <script src="./js/index.js" type="module"></script>
   </body>
 </html>

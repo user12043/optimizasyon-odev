@@ -5,7 +5,11 @@
       "name": "project-root"
     }
   ],
-  "settings": {},
+  "settings": {
+    "[javascript]": {
+      "editor.tabSize": 2
+    }
+  },
   "extensions": {
     "recommendations": [
       "esbenp.prettier-vscode",

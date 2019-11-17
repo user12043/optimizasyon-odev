@@ -1,5 +1,4 @@
-import { drawProjectGraph } from "./drawGrid.js";
-
+import { registerEvents } from "./userInput.js";
 // const canvas = document.getElementById("canvas");
 // let ctx = canvas.getContext("2d");
 // window.ctx = ctx;
@@ -17,4 +16,4 @@ ctx.stroke();
 ctx.beginPath();
 ctx.arc(400, 40, 30, 0, 2 * Math.PI);
 ctx.stroke(); */
-drawProjectGraph();
+registerEvents();

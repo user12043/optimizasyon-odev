@@ -25,7 +25,10 @@
       "webRoot": "${workspaceFolder}",
       "profile": "debugging",
       "reloadOnChange": {
-        "watch": ["${workspaceFolder}/**/*.js", "${workspaceFolder}/**/*.css"],
+        "watch": [
+          "${workspaceFolder:project-root}/**/*.js",
+          "${workspaceFolder:project-root}/**/*.css"
+        ],
         "ignore": "**/node_modules/**"
       },
       "preLaunchTask": "start"
