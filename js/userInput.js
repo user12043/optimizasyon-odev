@@ -21,7 +21,7 @@ function addTask() {
   newNode.prepend(taskId);
   document.getElementById("inputTableBody").appendChild(newNode);
   /**
-   * bişeyler
+    bişeyler
    */
   //project.tasks.push(<yeni task objesi>);
   project.tasks.push({
