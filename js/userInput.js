@@ -25,8 +25,13 @@ function addTask() {
    */
   //project.tasks.push(<yeni task objesi>);
   project.tasks.push({
-    id: taskId
-  }); // bunun içini doldur
+    id: taskId,
+    description: document.getElementsByClassName("taskDesc"),
+    tasksBefore: document.getElementsByClassName("taskBefore"),
+    cost: document.getElementsByClassName("taskCost"),
+    responsible: document.getElementsByClassName("taskResponsible"),
+    color: document.getElementsByClassName("taskColor")
+  });
   registerEvents();
 }
 
@@ -37,11 +42,27 @@ function onTaskDescChange(e) {
 
 export function registerEvents() {
   document.getElementById("addTaskBtn").onclick = addTask;
-  // inputlar değişince tetiklenecek olayları tanımla
-  // mesela cost class ından bir input değişince ilgili task objesini güncelle
+
   const taskDescInputs = document.getElementsByClassName("taskDesc");
-  for (let a = 0; a < taskDescInputs.length; a++) {
+  for (let a = 0; a < taskDescInputs.length; a++)
     taskDescInputs[a].onchange = onTaskDescChange;
-  }
+
+  const taskBeforeInputs = document.getElementsByClassName("taskBefore");
+  for (let a = 0; a < taskDescInputs.length; a++)
+    taskBeforeInputs[a].onchange = onTaskBeforeChange;
+
+  const taskCostInputs = document.getElementsByClassName("taskCost");
+  for (let a = 0; a < taskCostInputs.length; a++)
+    taskCostInputs[a].onchange = onTaskCostChange;
+
+  const taskResponsibleInputs = document.getElementsByClassName("taskResponsible");
+  for (let a = 0; a < taskResponsibleInputs.length; a++)
+    taskResponsibleInputs[a].onchange = onTaskResponsibleChange;
+
+  const taskColorInputs = document.getElementsByClassName("taskColor");
+  for (let a = 0; a < taskColorInputs.length; a++)
+    taskColorInputs[a].onchange = onTaskColorChange;
+
+
   // gibi
 }
