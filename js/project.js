@@ -1,4 +1,5 @@
-/* const projectObj = {
+/*
+const projectObj = {
   estimatedTotalCost, // Total cost of project (estimated)
   realTotalCost, // Total cost of project (real)
   possibility, // Possibility of completion of project with the estimated cost

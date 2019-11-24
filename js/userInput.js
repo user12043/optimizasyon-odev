@@ -40,6 +40,23 @@ function onTaskDescChange(e) {
   console.log(taskId + ": desc=" + e.target.value);
 }
 
+function onTaskBeforeChange(e) {
+  const taskId = e.target.parentElement.parentElement.id;
+  console.log(taskId + ": desc=" + e.target.value);
+}
+
+function onTaskCostChange(e) {
+  const taskId = e.target.parentElement.parentElement.id;
+  console.log(taskId + ": desc=" + e.target.value);
+}
+function onTaskResponsibleChange(e) {
+  const taskId = e.target.parentElement.parentElement.id;
+  console.log(taskId + ": desc=" + e.target.value);
+}
+function onTaskColorChange(e) {
+  const taskId = e.target.parentElement.parentElement.id;
+  console.log(taskId + ": desc=" + e.target.value);
+}
 export function registerEvents() {
   document.getElementById("addTaskBtn").onclick = addTask;
 
