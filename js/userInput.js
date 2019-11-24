@@ -13,7 +13,17 @@ function generateTaskId() {
   return id;
 }
 
-function addTask() {
+function getParams(){
+
+  descParam = document.getElementsByClassName("taskDesc").value;
+  tasksBeforeParam= document.getElementsByClassName("taskBefore").value;
+  costParam= document.getElementsByClassName("taskCost").value;
+  responsibleParam= document.getElementsByClassName("taskResponsible").value;
+  colorParam = document.getElementsByClassName("taskColor").value;
+
+}
+
+function addTask(descParam,tasksBeforeParam,costParam, responsibleParam, colorParam) {
   const newNode = document.getElementById("emptyTaskTr").cloneNode(true);
   newNode.style.display = "";
   const taskId = generateTaskId();
@@ -26,11 +36,11 @@ function addTask() {
   //project.tasks.push(<yeni task objesi>);
   project.tasks.push({
     id: taskId,
-    description: document.getElementsByClassName("taskDesc"),
-    tasksBefore: document.getElementsByClassName("taskBefore"),
-    cost: document.getElementsByClassName("taskCost"),
-    responsible: document.getElementsByClassName("taskResponsible"),
-    color: document.getElementsByClassName("taskColor")
+    description: descParam,
+    taskBefore: tasksBeforeParam,
+    cost: costParam,
+    responsible: responsibleParam,
+    color: colorParam
   });
   registerEvents();
 }
