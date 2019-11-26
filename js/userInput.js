@@ -23,34 +23,26 @@ function getParams(){
 
 }
 
-function addTask(descParam,tasksBeforeParam,costParam, responsibleParam, colorParam) {
+function addTask() {
   const newNode = document.getElementById("emptyTaskTr").cloneNode(true);
   newNode.style.display = "";
   const taskId = generateTaskId();
   newNode.id = taskId;
   newNode.prepend(taskId);
   document.getElementById("inputTableBody").appendChild(newNode);
-  /**
-    bişeyler
-   */
   //project.tasks.push(<yeni task objesi>);
   project.tasks.push({
-    id: taskId,
-    description: descParam,
-    taskBefore: tasksBeforeParam,
-    cost: costParam,
-    responsible: responsibleParam,
-    color: colorParam
+    id: taskId
   });
   registerEvents();
 }
 
 function onTaskDescChange(e) {
   const taskId = e.target.parentElement.parentElement.id;
-  console.log(taskId + ": desc=" + e.target.value);
+  project.find(taskId, project.tasks).description = e.target.value;
 }
 
-function onTaskBeforeChange(e) {
+function onTasksBeforeChange(e) {
   const taskId = e.target.parentElement.parentElement.id;
   console.log(taskId + ": desc=" + e.target.value);
 }
@@ -70,13 +62,17 @@ function onTaskColorChange(e) {
 export function registerEvents() {
   document.getElementById("addTaskBtn").onclick = addTask;
 
+  if (!project.tasks.length) {
+    return;
+  }
+
   const taskDescInputs = document.getElementsByClassName("taskDesc");
   for (let a = 0; a < taskDescInputs.length; a++)
     taskDescInputs[a].onchange = onTaskDescChange;
 
-  const taskBeforeInputs = document.getElementsByClassName("taskBefore");
+  const tasksBeforeInputs = document.getElementsByClassName("tasksBefore");
   for (let a = 0; a < taskDescInputs.length; a++)
-    taskBeforeInputs[a].onchange = onTaskBeforeChange;
+    tasksBeforeInputs[a].onchange = onTasksBeforeChange;
 
   const taskCostInputs = document.getElementsByClassName("taskCost");
   for (let a = 0; a < taskCostInputs.length; a++)

@@ -23,6 +23,13 @@ export default {
   find: (id, tasks) => {
     return tasks.find(task => task.id === id);
   },
+  clear: (project) => {
+    const {tasks} = project;
+    tasks.splice(0, tasks.length);
+    project.estimatedTotalCost = 0;
+    project.realTotalCost = 0;
+    project.possibility = false;
+  },
   tasks: [
     {
       id: "A",
