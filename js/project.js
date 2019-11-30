@@ -14,8 +14,9 @@ const taskObj = {
   cost, // The expected cost of task
   responsible, // The responsible of the task
   color // A color for task
+  
 };
- */
+*/
 export default {
   estimatedTotalCost: 30,
   realTotalCost: 28,

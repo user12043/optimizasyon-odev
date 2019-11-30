@@ -13,15 +13,6 @@ function generateTaskId() {
   return id;
 }
 
-function getParams(){
-
-  descParam = document.getElementsByClassName("taskDesc").value;
-  tasksBeforeParam= document.getElementsByClassName("taskBefore").value;
-  costParam= document.getElementsByClassName("taskCost").value;
-  responsibleParam= document.getElementsByClassName("taskResponsible").value;
-  colorParam = document.getElementsByClassName("taskColor").value;
-
-}
 
 function addTask() {
   const newNode = document.getElementById("emptyTaskTr").cloneNode(true);
@@ -30,39 +21,36 @@ function addTask() {
   newNode.id = taskId;
   newNode.prepend(taskId);
   document.getElementById("inputTableBody").appendChild(newNode);
-  //project.tasks.push(<yeni task objesi>);
+//project.tasks.push(<yeni task objesi>);
   project.tasks.push({
     id: taskId
   });
+
   registerEvents();
 }
 
-function onTaskDescChange(e) {
-  const taskId = e.target.parentElement.parentElement.id;
-  project.find(taskId, project.tasks).description = e.target.value;
+function removeTask() {
+  let taskId = e.target.parentElement.parentElement.id;
+console.log(taskId)
+
+registerEvents();
 }
 
-function onTasksBeforeChange(e) {
-  const taskId = e.target.parentElement.parentElement.id;
-  console.log(taskId + ": desc=" + e.target.value);
-}
 
-function onTaskCostChange(e) {
-  const taskId = e.target.parentElement.parentElement.id;
-  console.log(taskId + ": desc=" + e.target.value);
-}
-function onTaskResponsibleChange(e) {
-  const taskId = e.target.parentElement.parentElement.id;
-  console.log(taskId + ": desc=" + e.target.value);
-}
-function onTaskColorChange(e) {
-  const taskId = e.target.parentElement.parentElement.id;
-  console.log(taskId + ": desc=" + e.target.value);
-}
+
+
+
 export function registerEvents() {
-  document.getElementById("addTaskBtn").onclick = addTask;
 
-  if (!project.tasks.length) {
+  document.getElementById("addTaskBtn").onclick = addTask;
+  
+  $("#inputTableBody").on('click', '.taskRemoveBtn', function() {
+  $(this).closest("tr").remove();
+  
+});
+   
+
+if (!project.tasks.length) {
     return;
   }
 
@@ -86,6 +74,33 @@ export function registerEvents() {
   for (let a = 0; a < taskColorInputs.length; a++)
     taskColorInputs[a].onchange = onTaskColorChange;
 
+    
+  }
 
-  // gibi
+function onTaskDescChange(e) {
+  let taskId = e.target.parentElement.parentElement.id;
+  project.find(taskId, project.tasks).description = e.target.value;
+  //console.log(taskId + ": taskbefore=" + e.target.value);
+  console.log(taskId + ": descs:" + project.find(taskId, project.tasks).description)
+}
+
+function onTasksBeforeChange(e) {
+  let taskId = e.target.parentElement.parentElement.id;
+  project.find(taskId, project.tasks).tasksBefore = e.target.value;
+  console.log(taskId + ": taskbefore=" + project.find(taskId, project.tasks).taskBefore);
+}
+function onTaskCostChange(e) {
+  let taskId = e.target.parentElement.parentElement.id;
+  project.find(taskId, project.tasks).cost = e.target.value
+  console.log(taskId + ": taskcost=" + project.find(taskId, project.tasks).cost);
+}
+function onTaskResponsibleChange(e) {
+  let taskId = e.target.parentElement.parentElement.id;
+  project.find(taskId, project.tasks).responsible = e.target.value;
+  console.log(taskId + ": responsible=" + project.find(taskId, project.tasks).responsible);
+}
+function onTaskColorChange(e) {
+  let taskId = e.target.parentElement.parentElement.id;
+  project.find(taskId, project.tasks).color = e.target.value
+  console.log(taskId + ": color=" + project.find(taskId, project.tasks).color);
 }

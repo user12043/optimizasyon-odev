@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <head>
     <title>Proje Zamanlayıcısı</title>
     <meta charset="utf-8" />
@@ -14,9 +15,22 @@
     <canvas id="canvas">
       Your browser does not support canvas! Application will not work.
     </canvas>
-    <div style="width: 80%; text-align: center; margin: auto;">
-      <button id="addTaskBtn" style="float: right;">Add new</button>
-      <table border="3" style="text-align: center; width: 100%;">
+    <div style="width: 60%; text-align: center; margin: auto;">
+      <table border="2" style="text-align: center; width: 100%;">
+      
+        <tbody id="firstinputTableBody">
+           <tr>
+            <td>Estimated Total Cost</td>
+            <td><input type="number" class="taskCost" /></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    
+      <div style="width: 80%; text-align: center; margin: auto;">
+        <button id="addTaskBtn" style="float: right;">Add new</button>
+    
+        <table border="3" style="text-align: center; width: 100%;">
         <thead>
           <tr>
             <th>ID</th>
@@ -45,8 +59,10 @@
             <td><button class="taskRemoveBtn">Remove</button></td>
           </tr>
         </tbody>
+
       </table>
     </div>
+    <button class="button button2">Calculate</button>
 
     <script src="./js/index.js" type="module"></script>
   </body>
