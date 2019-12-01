@@ -21,3 +21,6 @@ ctx.stroke(); */
 window.project = project;
 project.clear(project);
 registerEvents();
+$("#inputTableBody").on('click', '.taskRemoveBtn', function() {
+    $(this).closest("tr").remove();
+    });

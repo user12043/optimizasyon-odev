@@ -44,13 +44,24 @@ export function registerEvents() {
 
   document.getElementById("addTaskBtn").onclick = addTask;
   
-  $("#inputTableBody").on('click', '.taskRemoveBtn', function() {
-  $(this).closest("tr").remove();
-  
-});
-   
+  $(document).ready(function(){
 
-if (!project.tasks.length) {
+    $.fn.removeTask = removeTask;
+
+    $(" #taskRemoveBtn").click(function(){
+
+        $.fn.removeTask();
+
+    });
+
+});
+
+   
+const EstimatedTotalCostInputs = document.getElementsByClassName("EstimatedTotalCost");
+  for (let a = 0; a < EstimatedTotalCostInputs.length; a++)
+    EstimatedTotalCostInputs[a].onchange = onEstimatedTotalCostChange;
+
+    if (!project.tasks.length) {
     return;
   }
 
@@ -76,6 +87,14 @@ if (!project.tasks.length) {
 
     
   }
+
+  function onEstimatedTotalCostChange(e) {
+    let projectEstTotalCost = e.target.value;
+   project.estimatedTotalCost=projectEstTotalCost;
+    console.log(": Estimated Total Cost=" + project.estimatedTotalCost);
+  }
+
+
 
 function onTaskDescChange(e) {
   let taskId = e.target.parentElement.parentElement.id;
