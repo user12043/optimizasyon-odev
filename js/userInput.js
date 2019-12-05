@@ -21,19 +21,33 @@ function addTask() {
   newNode.id = taskId;
   newNode.prepend(taskId);
   document.getElementById("inputTableBody").appendChild(newNode);
+  
 //project.tasks.push(<yeni task objesi>);
   project.tasks.push({
     id: taskId
   });
-
+  appendSelectOption();
   registerEvents();
 }
 
-function removeTask() {
-  let taskId = e.target.parentElement.parentElement.id;
-console.log(taskId)
 
-registerEvents();
+
+
+function appendSelectOption(){
+
+} 
+
+
+export function removeTask(e) {
+ 
+  let taskId = e.target.parentElement.parentElement.id;
+  console.log(taskId);
+
+
+
+console.log("removeTask is working")
+
+ registerEvents();
 }
 
 
@@ -43,20 +57,11 @@ registerEvents();
 export function registerEvents() {
 
   document.getElementById("addTaskBtn").onclick = addTask;
-  
-  $(document).ready(function(){
 
-    $.fn.removeTask = removeTask;
 
-    $(" #taskRemoveBtn").click(function(){
 
-        $.fn.removeTask();
 
-    });
 
-});
-
-   
 const EstimatedTotalCostInputs = document.getElementsByClassName("EstimatedTotalCost");
   for (let a = 0; a < EstimatedTotalCostInputs.length; a++)
     EstimatedTotalCostInputs[a].onchange = onEstimatedTotalCostChange;
@@ -106,7 +111,7 @@ function onTaskDescChange(e) {
 function onTasksBeforeChange(e) {
   let taskId = e.target.parentElement.parentElement.id;
   project.find(taskId, project.tasks).tasksBefore = e.target.value;
-  console.log(taskId + ": taskbefore=" + project.find(taskId, project.tasks).taskBefore);
+  console.log(taskId + ": taskBefore=" + project.find(taskId, project.tasks).taskBefore);
 }
 function onTaskCostChange(e) {
   let taskId = e.target.parentElement.parentElement.id;
