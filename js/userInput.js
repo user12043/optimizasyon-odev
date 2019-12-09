@@ -21,20 +21,27 @@ function addTask() {
   newNode.id = taskId;
   newNode.prepend(taskId);
   document.getElementById("inputTableBody").appendChild(newNode);
+
   
 //project.tasks.push(<yeni task objesi>);
   project.tasks.push({
     id: taskId
   });
-  appendSelectOption();
+  appendSelectOption(taskId)
   registerEvents();
 }
 
 
 
 
-function appendSelectOption(){
-
+function appendSelectOption(id){
+  const taskId = id;
+  const sel = document.getElementsByClassName('tasksBefore')[0];
+  const option = document.createElement('option');
+  option.value = taskId; 
+  option.text = taskId;
+  sel.appendChild(option);
+  
 } 
 
 
