@@ -20,12 +20,11 @@ ctx.stroke();
 ctx.beginPath();
 ctx.arc(400, 40, 30, 0, 2 * Math.PI);
 ctx.stroke(); */
-
 window.project = project;
-project.clear(project);
+project.clear(project)
 registerEvents();
 $("#inputTableBody").on('click', '.taskRemoveBtn', function() {  
     $(this).closest("tr").remove();
-    removeTask();
-
+    let id =$(this).closest('tr').attr('id')
+removeTask(id)
 });

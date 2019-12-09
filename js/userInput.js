@@ -38,15 +38,14 @@ function appendSelectOption(){
 } 
 
 
-export function removeTask(e) {
- 
-  let taskId = e.target.parentElement.parentElement.id;
-  console.log(taskId);
-
-
-
+export function removeTask(id) {
+  let taskId =id; 
+//console.log(taskId);
 console.log("removeTask is working")
-
+  project.tasks = $.grep(project.tasks, function(e){ 
+  return e.id != taskId; 
+});
+console.log(project.tasks)
  registerEvents();
 }
 
