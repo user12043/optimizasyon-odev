@@ -22,8 +22,8 @@ function addTask() {
   newNode.prepend(taskId);
   document.getElementById("inputTableBody").appendChild(newNode);
 
-  
-//project.tasks.push(<yeni task objesi>);
+
+  //project.tasks.push(<yeni task objesi>);
   project.tasks.push({
     id: taskId
   });
@@ -34,26 +34,26 @@ function addTask() {
 
 
 
-function appendSelectOption(id){
+function appendSelectOption(id) {
   const taskId = id;
   const sel = document.getElementsByClassName('tasksBefore')[0];
   const option = document.createElement('option');
-  option.value = taskId; 
+  option.value = taskId;
   option.text = taskId;
   sel.appendChild(option);
-  
-} 
+
+}
 
 
 export function removeTask(id) {
-  let taskId =id; 
-//console.log(taskId);
-console.log("removeTask is working")
-  project.tasks = $.grep(project.tasks, function(e){ 
-  return e.id != taskId; 
-});
-console.log(project.tasks)
- registerEvents();
+  let taskId = id;
+  //console.log(taskId);
+  console.log("removeTask is working")
+  project.tasks = $.grep(project.tasks, function (e) {
+    return e.id != taskId;
+  });
+  console.log(project.tasks)
+  registerEvents();
 }
 
 
@@ -63,16 +63,11 @@ console.log(project.tasks)
 export function registerEvents() {
 
   document.getElementById("addTaskBtn").onclick = addTask;
+  const estimatedTotalCostInputs = document.getElementsByClassName("EstimatedTotalCost");
+  for (let a = 0; a < estimatedTotalCostInputs.length; a++)
+    estimatedTotalCostInputs[a].onchange = onEstimatedTotalCostChange;
 
-
-
-
-
-const EstimatedTotalCostInputs = document.getElementsByClassName("EstimatedTotalCost");
-  for (let a = 0; a < EstimatedTotalCostInputs.length; a++)
-    EstimatedTotalCostInputs[a].onchange = onEstimatedTotalCostChange;
-
-    if (!project.tasks.length) {
+  if (!project.tasks.length) {
     return;
   }
 
@@ -80,9 +75,23 @@ const EstimatedTotalCostInputs = document.getElementsByClassName("EstimatedTotal
   for (let a = 0; a < taskDescInputs.length; a++)
     taskDescInputs[a].onchange = onTaskDescChange;
 
-  const tasksBeforeInputs = document.getElementsByClassName("tasksBefore");
-  for (let a = 0; a < taskDescInputs.length; a++)
-    tasksBeforeInputs[a].onchange = onTasksBeforeChange;
+
+  var optionVal = new Array();
+
+  for (let i = 0; i <= project.tasks.length; i++) {
+    const tasksBefore = document.getElementsByClassName("tasksBefore")[i];
+    for (let index = 0; index < project.tasks.length; index++) {
+      optionVal.push(tasksBefore.options[i].value);
+      console.log(i + " = " + optionVal[index])
+    }
+    
+
+  }
+
+
+
+
+
 
   const taskCostInputs = document.getElementsByClassName("taskCost");
   for (let a = 0; a < taskCostInputs.length; a++)
@@ -96,14 +105,14 @@ const EstimatedTotalCostInputs = document.getElementsByClassName("EstimatedTotal
   for (let a = 0; a < taskColorInputs.length; a++)
     taskColorInputs[a].onchange = onTaskColorChange;
 
-    
-  }
 
-  function onEstimatedTotalCostChange(e) {
-    let projectEstTotalCost = e.target.value;
-   project.estimatedTotalCost=projectEstTotalCost;
-    console.log(": Estimated Total Cost=" + project.estimatedTotalCost);
-  }
+}
+
+function onEstimatedTotalCostChange(e) {
+  let projectEstTotalCost = e.target.value;
+  project.estimatedTotalCost = projectEstTotalCost;
+  console.log(": Estimated Total Cost=" + project.estimatedTotalCost);
+}
 
 
 
@@ -114,11 +123,11 @@ function onTaskDescChange(e) {
   console.log(taskId + ": descs:" + project.find(taskId, project.tasks).description)
 }
 
-function onTasksBeforeChange(e) {
+/*function onTasksBeforeChange(e) {
   let taskId = e.target.parentElement.parentElement.id;
   project.find(taskId, project.tasks).tasksBefore = e.target.value;
   console.log(taskId + ": taskBefore=" + project.find(taskId, project.tasks).taskBefore);
-}
+}*/
 function onTaskCostChange(e) {
   let taskId = e.target.parentElement.parentElement.id;
   project.find(taskId, project.tasks).cost = e.target.value
