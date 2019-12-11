@@ -76,21 +76,15 @@ export function registerEvents() {
     taskDescInputs[a].onchange = onTaskDescChange;
 
 
+
   var optionVal = new Array();
 
-  for (let i = 0; i <= project.tasks.length; i++) {
-    const tasksBefore = document.getElementsByClassName("tasksBefore")[i];
-    for (let index = 0; index < project.tasks.length; index++) {
-      optionVal.push(tasksBefore.options[i].value);
-      console.log(i + " = " + optionVal[index])
-    }
-    
+  for (let index = 1; index < project.tasks.length; index++) {
+    const tasksBefore = document.getElementsByClassName("tasksBefore")[index];
+    optionVal = $(tasksBefore).val()
+    console.log(optionVal)
 
   }
-
-
-
-
 
 
   const taskCostInputs = document.getElementsByClassName("taskCost");
