@@ -1,4 +1,5 @@
 import project from "./project.js";
+const { tasks } = project;
 
 const letters = "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ";
 let letterIndex = 0;
@@ -18,20 +19,23 @@ function addTask() {
   newNode.style.display = "";
   const taskId = generateTaskId();
   newNode.id = taskId;
-  newNode.prepend(taskId);
+  let idNode = document.createElement("td");
+  idNode.innerText = taskId;
+  newNode.prepend(idNode);
   document.getElementById("inputTableBody").appendChild(newNode);
 
-  //project.tasks.push(<yeni task objesi>);
-  project.tasks.push({
-    id: taskId
+  //tasks.push(<yeni task objesi>);
+  tasks.push({
+    id: taskId,
+    tasksBefore: [],
+    tasksAfter: []
   });
   appendSelectOption(taskId);
   registerEvents();
 }
 
-function appendSelectOption(id) {
-  const taskId = id;
-  for (let index = 0; index < project.tasks.length; index++) {
+function appendSelectOption(taskId) {
+  for (let index = 0; index < tasks.length; index++) {
     const sel = document.getElementsByClassName("tasksBefore")[index];
     const option = document.createElement("option");
     option.value = taskId;
@@ -40,91 +44,97 @@ function appendSelectOption(id) {
   }
 }
 
-export function removeTask(id) {
-  let taskId = id;
-   //console.log(taskId);
-  console.log("removeTask is working");
-  project.tasks = $.grep(project.tasks, function(e) {
-    return e.id != taskId;
-  });
-  console.log(project.tasks);
+function removeSelectOption(taskId) {
+  $("option:contains('" + taskId + "')").remove();
+}
+
+export function removeTask(taskId) {
+  //console.log(taskId);
+  project.removeTask(taskId, tasks);
+  console.log(tasks);
   registerEvents();
+  removeSelectOption(taskId);
 }
 
-export function registerEvents() {
-  document.getElementById("addTaskBtn").onclick = addTask;
-  const estimatedTotalCostInputs = document.getElementsByClassName(
-    "EstimatedTotalCost"
-  );
-  for (let a = 0; a < estimatedTotalCostInputs.length; a++)
-    estimatedTotalCostInputs[a].onchange = onEstimatedTotalCostChange;
-
-  if (!project.tasks.length) {
-    return;
+function registerEventForClass(className, func) {
+  const elements = $("." + className);
+  for (let i = 0; i < elements.length; i++) {
+    elements[i].onchange = func;
   }
-
-  const taskDescInputs = document.getElementsByClassName("taskDesc");
-  for (let a = 0; a < taskDescInputs.length; a++)
-    taskDescInputs[a].onchange = onTaskDescChange;
-
-  
-
-  for (let index = 1; index < project.tasks.length; index++) {
-    const tasksBefore = document.getElementsByClassName("tasksBefore")[index];
-    for (let a = 0; a < tasksBefore.length; a++)
-    tasksBefore.onclick = taskBeforeChange;
-  
-  }
-  
-
-  const taskCostInputs = document.getElementsByClassName("taskCost");
-  for (let a = 0; a < taskCostInputs.length; a++)
-    taskCostInputs[a].onchange = onTaskCostChange;
-
-  const taskResponsibleInputs = document.getElementsByClassName("taskResponsible");
-  for (let a = 0; a < taskResponsibleInputs.length; a++)
-    taskResponsibleInputs[a].onchange = onTaskResponsibleChange;
-
-  const taskColorInputs = document.getElementsByClassName("taskColor");
-  for (let a = 0; a < taskColorInputs.length; a++)
-    taskColorInputs[a].onchange = onTaskColorChange;
 }
-var optionVal = new Array();
+
 function onEstimatedTotalCostChange(e) {
-  let projectEstTotalCost = e.target.value;
-  project.estimatedTotalCost = projectEstTotalCost;
-  console.log(": Estimated Total Cost=" + project.estimatedTotalCost);
+  let projectEstTotalCost = e.target.value || 1;
+  project.estimatedTotalCost = +projectEstTotalCost;
+  console.log("Estimated Total Cost=" + project.estimatedTotalCost);
 }
 
 function onTaskDescChange(e) {
   let taskId = e.target.parentElement.parentElement.id;
-  project.find(taskId, project.tasks).description = e.target.value;
+  project.find(taskId, tasks).description = e.target.value;
   //console.log(taskId + ": taskbefore=" + e.target.value);
-  console.log(taskId + ": descs:" + project.find(taskId, project.tasks).description);
+  console.log(taskId + ": descs:" + project.find(taskId, tasks).description);
 }
-function taskBeforeChange(e) {
-  let taskId = e.target.parentElement.parentElement.parentElement.id;
-  console.log("taskId = "+taskId);
-  project.find(taskId, project.tasks).tasksBefore = $(e.target.parentElement).val();
-  optionVal=$(e.target.parentElement).val()
-  console.log( " = " +optionVal);
+
+function onTaskBeforeChange(e) {
+  let taskId = e.target.parentElement.parentElement.id;
+  const value = $(e.target).val();
+  console.log("taskId = " + taskId + ", tasksBefore: " + value);
+  project.find(taskId, tasks).tasksBefore = value;
+
+  // set this task after task of selected ones
+  /* for (let i = 0; i < value.length; i++) {
+    const tasksAfter = project.find(value[i], tasks).tasksAfter;
+    if (tasksAfter.indexOf(taskId) == -1) {
+      tasksAfter.push(taskId);
+    }
+  } */
+  tasks.forEach(({ id: currentTaskId, tasksAfter }) => {
+    const index = tasksAfter.indexOf(taskId);
+    const currentIndex = value.indexOf(currentTaskId);
+    if (index != -1) {
+      if (currentIndex == -1) {
+        tasksAfter.splice(index, 1);
+      }
+    } else {
+      if (currentIndex != -1) {
+        tasksAfter.push(taskId);
+      }
+    }
+  });
 }
+
 function onTaskCostChange(e) {
   let taskId = e.target.parentElement.parentElement.id;
-  project.find(taskId, project.tasks).cost = e.target.value;
-  console.log(
-    taskId + ": taskcost=" + project.find(taskId, project.tasks).cost
-  );
+  project.find(taskId, tasks).cost = e.target.value;
+  console.log(taskId + ": taskcost=" + project.find(taskId, tasks).cost);
 }
+
 function onTaskResponsibleChange(e) {
   let taskId = e.target.parentElement.parentElement.id;
-  project.find(taskId, project.tasks).responsible = e.target.value;
+  project.find(taskId, tasks).responsible = e.target.value;
   console.log(
-    taskId + ": responsible=" + project.find(taskId, project.tasks).responsible
+    taskId + ": responsible=" + project.find(taskId, tasks).responsible
   );
 }
+
 function onTaskColorChange(e) {
   let taskId = e.target.parentElement.parentElement.id;
-  project.find(taskId, project.tasks).color = e.target.value;
-  console.log(taskId + ": color=" + project.find(taskId, project.tasks).color);
+  project.find(taskId, tasks).color = e.target.value;
+  console.log(taskId + ": color=" + project.find(taskId, tasks).color);
+}
+
+document.getElementById("addTaskBtn").onclick = addTask;
+$("#estimatedTotalCost").change(onEstimatedTotalCostChange);
+
+export function registerEvents() {
+  if (!tasks.length) {
+    return;
+  }
+
+  registerEventForClass("taskDesc", onTaskDescChange);
+  registerEventForClass("tasksBefore", onTaskBeforeChange);
+  registerEventForClass("taskCost", onTaskCostChange);
+  registerEventForClass("taskResponsible", onTaskResponsibleChange);
+  registerEventForClass("taskColor", onTaskColorChange);
 }

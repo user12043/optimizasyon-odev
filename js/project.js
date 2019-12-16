@@ -1,36 +1,34 @@
-/*
-const projectObj = {
-  estimatedTotalCost, // Total cost of project (estimated)
-  realTotalCost, // Total cost of project (real)
-  possibility, // Possibility of completion of project with the estimated cost
-  tasks // An array contiains the task objects of project object
-};
-
-const taskObj = {
-  id, // a unique id to identify task
-  description, // A string describes the task's necessity
-  tasksBefore, // The ids of tasks have to be done before this task
-  tasksAfter, // The ids of tasks have to be done after this task
-  cost, // The expected cost of task
-  responsible, // The responsible of the task
-  color // A color for task
-  
-};
-*/
 export default {
-  estimatedTotalCost: 30,
-  realTotalCost: 28,
-  possibility: true,
   find: (id, tasks) => {
     return tasks.find(task => task.id === id);
   },
-  clear: (project) => {
-    const {tasks} = project;
+  clear: project => {
+    const { tasks } = project;
     tasks.splice(0, tasks.length);
     project.estimatedTotalCost = 0;
     project.realTotalCost = 0;
     project.possibility = false;
   },
+  removeTask: (taskId, tasks) => {
+    const removeIndex = tasks.findIndex(({ id }) => id === taskId);
+    tasks.splice(removeIndex, 1);
+    tasks.forEach(({ tasksBefore, tasksAfter }) => {
+      let removeIndex = tasksBefore.findIndex(
+        beforeTaskId => beforeTaskId === taskId
+      );
+      if (removeIndex != -1) {
+        tasksBefore.splice(removeIndex, 1);
+      }
+
+      removeIndex = tasksAfter.findIndex(afterTaskId => afterTaskId === taskId);
+      if (removeIndex != -1) {
+        tasksAfter.splice(removeIndex, 1);
+      }
+    });
+  },
+  estimatedTotalCost: 30,
+  realTotalCost: 28,
+  possibility: true,
   tasks: [
     {
       id: "A",

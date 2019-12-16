@@ -40,17 +40,29 @@ function getCell(x, y) {
   };
 }
 
-function drawTask({ id, x, y }) {
+function drawTask({ id, cost, x, y }) {
   ctx.beginPath();
   ctx.arc(x, y, TASK_CELL_SIZE / 2, 0, 360);
   const style = ctx.strokeStyle;
   ctx.strokeStyle = "#FF0000";
-  ctx.strokeText(id, x - GRAPH_FONT_SIZE / 4, y + GRAPH_FONT_SIZE / 4);
+  ctx.strokeText(
+    id,
+    x - GRAPH_FONT_SIZE / 4,
+    y + GRAPH_FONT_SIZE / 4 - GRAPH_FONT_SIZE * 0.25
+  );
+
+  ctx.strokeStyle = "#000000";
+  const xFactor = cost ? cost.length * GRAPH_FONT_SIZE * 0.2 : 0;
+  ctx.strokeText(
+    cost || "",
+    x - GRAPH_FONT_SIZE / 4 - xFactor,
+    y + GRAPH_FONT_SIZE / 4 + GRAPH_FONT_SIZE * 0.75
+  );
   ctx.strokeStyle = style;
   ctx.stroke();
 }
 
-function pushDraw({ id, column }) {
+function pushDraw({ id, column, cost }) {
   // create the rows if not exists
   if (!drawing[column]) {
     drawing.splice(column, 0, []);
@@ -58,6 +70,7 @@ function pushDraw({ id, column }) {
 
   drawing[column].push({
     id,
+    cost,
     x: getCell(column * 2, drawing[column].length).x,
     y: getCell(column, drawing[column].length * 2).y
   });

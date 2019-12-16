@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <head>
     <title>Proje Zamanlayıcısı</title>
     <meta charset="utf-8" />
@@ -17,20 +17,19 @@
     </canvas>
     <div style="width: 60%; text-align: center; margin: auto;">
       <table border="6" style="text-align: center; width: 100%; ">
-      
         <tbody id="firstinputTableBody">
-           <tr>
+          <tr>
             <td>Estimated Total Cost</td>
-            <td><input type="number" class="EstimatedTotalCost" /></td>
+            <td><input type="number" id="estimatedTotalCost" /></td>
           </tr>
         </tbody>
       </table>
-      </div>
-    
-      <div style="width: 80%; text-align: center; margin: auto;">
-        <button id="addTaskBtn" style="float: right;">Add new</button>
-    
-        <table border="3" style="text-align: center; width: 100%;">
+    </div>
+
+    <div style="width: 80%; text-align: center; margin: auto;">
+      <button id="addTaskBtn" style="float: right;">Add new</button>
+
+      <table border="3" style="text-align: center; width: 100%;">
         <thead>
           <tr>
             <th>ID</th>
@@ -49,10 +48,7 @@
               <input type="text" class="taskDesc" />
             </td>
             <td>
-              <select multiple class="tasksBefore">
-                <option>Select...</option>
-                
-              </select>
+              <select multiple class="tasksBefore w-100" size="3"> </select>
             </td>
             <td><input type="number" class="taskCost" /></td>
             <td><input type="text" class="taskResponsible" /></td>
@@ -60,7 +56,6 @@
             <td><button class="taskRemoveBtn">Remove</button></td>
           </tr>
         </tbody>
-
       </table>
     </div>
     <button id="calculate" class="button button2">Calculate</button>
