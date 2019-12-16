@@ -1,7 +1,6 @@
 import { registerEvents } from "./userInput.js";
 import { removeTask } from "./userInput.js";
-
-
+import { walkListAhead, walkListAback, criticalPath} from "./cpm.js"
 import project from "./project.js";
 import { drawProjectGraph } from "./drawGrid.js";
 // const canvas = document.getElementById("canvas");
@@ -33,5 +32,8 @@ removeTask(id)
 document.getElementById("calculate").onclick= calculate
 function calculate(){
     drawProjectGraph();
-
+    const ahead = walkListAhead(project.tasks)
+    const back = walkListAback(ahead);
+    criticalPath(back);
 }
+
