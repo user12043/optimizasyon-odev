@@ -3,6 +3,7 @@ import { removeTask } from "./userInput.js";
 
 
 import project from "./project.js";
+import { drawProjectGraph } from "./drawGrid.js";
 // const canvas = document.getElementById("canvas");
 // let ctx = canvas.getContext("2d");
 // window.ctx = ctx;
@@ -28,3 +29,9 @@ $("#inputTableBody").on('click', '.taskRemoveBtn', function() {
     let id =$(this).closest('tr').attr('id')
 removeTask(id)
 });
+
+document.getElementById("calculate").onclick= calculate
+function calculate(){
+    drawProjectGraph();
+
+}

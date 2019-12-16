@@ -42,7 +42,7 @@ function appendSelectOption(id) {
 
 export function removeTask(id) {
   let taskId = id;
-  //console.log(taskId);
+   //console.log(taskId);
   console.log("removeTask is working");
   project.tasks = $.grep(project.tasks, function(e) {
     return e.id != taskId;
@@ -67,10 +67,11 @@ export function registerEvents() {
   for (let a = 0; a < taskDescInputs.length; a++)
     taskDescInputs[a].onchange = onTaskDescChange;
 
-  var optionVal = new Array();
+  
 
   for (let index = 1; index < project.tasks.length; index++) {
     const tasksBefore = document.getElementsByClassName("tasksBefore")[index];
+    for (let a = 0; a < tasksBefore.length; a++)
     tasksBefore.onclick = taskBeforeChange;
   
   }
@@ -88,7 +89,7 @@ export function registerEvents() {
   for (let a = 0; a < taskColorInputs.length; a++)
     taskColorInputs[a].onchange = onTaskColorChange;
 }
-
+var optionVal = new Array();
 function onEstimatedTotalCostChange(e) {
   let projectEstTotalCost = e.target.value;
   project.estimatedTotalCost = projectEstTotalCost;
