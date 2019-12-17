@@ -4,6 +4,7 @@ import { walkListAhead, walkListAback, criticalPath } from "./cpm.js";
 import project from "./project.js";
 import { drawProjectGraph } from "./drawGrid.js";
 
+
 window.project = project;
 project.clear(project);
 registerEvents();
@@ -18,8 +19,8 @@ $("#inputTableBody").on("click", ".taskRemoveBtn", function() {
 });
 
 document.getElementById("calculate").onclick = () => {
-  // const ahead = walkListAhead(project.tasks);
-  // const back = walkListAback(ahead);
-  // criticalPath(back);
+  walkListAhead();
+  walkListAback();
+  criticalPath();
   drawProjectGraph();
-}
+};

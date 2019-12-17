@@ -28,7 +28,12 @@ function addTask() {
   tasks.push({
     id: taskId,
     tasksBefore: [],
-    tasksAfter: []
+    tasksAfter: [],
+    cost: 1,
+    earliestStartTime: 0,
+    earliestEndTime: 0,
+    latestStartTime: 0,
+    latestEndTime: 0
   });
   appendSelectOption(taskId);
   registerEvents();

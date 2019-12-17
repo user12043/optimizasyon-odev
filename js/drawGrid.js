@@ -44,7 +44,7 @@ function drawTask({ id, cost, x, y }) {
   ctx.beginPath();
   ctx.arc(x, y, TASK_CELL_SIZE / 2, 0, 360);
   const style = ctx.strokeStyle;
-  ctx.strokeStyle = "#FF0000";
+  ctx.strokeStyle = "#0000FF";
   ctx.strokeText(
     id,
     x - GRAPH_FONT_SIZE / 4,
@@ -99,10 +99,15 @@ function drawLines() {
         // find task in drawing
         drawing[afterTask.column].find(row => {
           if (row.id == afterTaskId) {
+            const currentStyle = ctx.strokeStyle;
             ctx.beginPath();
+            if (task.isCritical && afterTask.isCritical) {
+              ctx.strokeStyle = "#FF0000";
+            }
             ctx.moveTo(x, y);
             ctx.lineTo(row.x, row.y);
             ctx.stroke();
+            ctx.strokeStyle = currentStyle;
           }
         });
       });
